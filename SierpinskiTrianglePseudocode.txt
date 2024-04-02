@@ -1,0 +1,17 @@
+point1 = (x, y)
+point2 = (x, y)
+point3 = (x, y)
+
+draw point 1
+draw point 2
+draw point 3
+
+while true:
+	draw a point at a random location within the larger triangle
+	randomPoint = rand.randint(1, 3)
+	if randomPoint == 1:
+		draw point a random distance between the last point and vertex 1
+	if randomPoint == 2:
+		draw point a random distance between the last point and vertex 2
+	if randomPoint == 3:
+		draw point a random distance between the last point and vertex 3
