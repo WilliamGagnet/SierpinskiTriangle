@@ -2,6 +2,7 @@ import turtle
 import random
 
 t = turtle.Turtle()
+t.speed(0)
 
 def printTriangleBorder(point1, point2, point3):
     t.up()
@@ -24,20 +25,22 @@ def makeFractal(point1, point2, point3):
     randomStartY = random.randint(-500, 500)
     randomStart = [randomStartX, randomStartY]
 
-    if (not isInside(point1, point2, point3, randomStart)):
+    while (not isInside(point1, point2, point3, randomStart)):
         randomStartX = random.randint(-500, 500)
         randomStartY = random.randint(-500, 500)
         randomStart = [randomStartX, randomStartY]
+    
+    lastPoint = randomStart
 
     # make a point a random distance between randomStart and a random vertex, calling it
     # lastPoint
     randomStartVertex = random.randint(0, 2)
     if (randomStartVertex == 0):
-        lastPoint = midpoint(randomStart, point1)
+        lastPoint = midpoint(lastPoint, point1)
     if (randomStartVertex == 1):
-        lastPoint = midpoint(randomStart, point2)
+        lastPoint = midpoint(lastPoint, point2)
     if (randomStartVertex == 2):
-        lastPoint = midpoint(randomStart, point3)
+        lastPoint = midpoint(lastPoint, point3)
 
     # draw first point
     t.up()
@@ -45,37 +48,38 @@ def makeFractal(point1, point2, point3):
     t.down()
     t.dot(10)
 
-    for i in range(0, 100):
+    for i in range(0, 1000):
         randomVertex = random.randint(0, 2)
         if (randomVertex == 0):
             # make a point a random distance between lastPoint and vertex1
-            lastPoint = midpoint(randomStart, point1)
+            lastPoint = midpoint(lastPoint, point1)
             t.up()
             t.goto(lastPoint[0], lastPoint[1])
             t.down()
             t.dot(10)
         if (randomVertex == 1):
             # make a point a random distance between lastPoint and vertex2
-            lastPoint = midpoint(randomStart, point2)
+            lastPoint = midpoint(lastPoint, point2)
             t.up()
             t.goto(lastPoint[0], lastPoint[1])
             t.down()
             t.dot(10)
         if (randomVertex == 2):
             # make a point a random distance between lastPoint and vertex3
-            lastPoint = midpoint(randomStart, point3)
+            lastPoint = midpoint(lastPoint, point3)
             t.up()
             t.goto(lastPoint[0], lastPoint[1])
             t.down()
             t.dot(10)
 
-        turtle.done()
+    turtle.done()
 
 def midpoint(point1, point2):
-    newPoint = []
-    newPoint[0] = (point1[0] + point2[0]) / 2
-    newPoint[1] = (point1[1] + point2[1]) / 2
-    return newPoint
+    return [
+        (point1[0] + point2[0]) / 2,
+        (point1[1] + point2[1]) / 2
+    ]
+
 def area(point1, point2, point3):
     return abs((point1[0] * (point2[1] - point3[1]) + point2[0] * (point3[1] - point1[1]) + point3[0] * (point1[1] - point2[1])) / 2.0)
 
